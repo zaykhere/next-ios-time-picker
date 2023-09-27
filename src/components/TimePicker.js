@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 // import { Portal } from 'react-portal';
 import TimePickerSelection from './TimePickerSelection';
 import '../styles/react-ios-time-picker.css';
-import loadable from '@loadable/component';
-let Portal;
+// import loadable from '@loadable/component';
+// import { Portal } from 'react-portal';
 
 function TimePicker({
    value: initialValue = null,
@@ -68,15 +68,15 @@ function TimePicker({
       pickerDefaultValue,
    };
 
-   useEffect(() => {
-     if(typeof window !== "undefined") {
-         setRenderPicker(true);
+   // useEffect(() => {
+   //   if(typeof window !== "undefined") {
+   //       setRenderPicker(true);
 
-         if(typeof document !== "undefined") {
-            Portal = loadable(() => import("react-portal"))
-         }
-      }
-   }, [])
+   //       if(typeof document !== "undefined") {
+   //          Portal = loadable(() => import("react-portal"))
+   //       }
+   //    }
+   // }, [])
    
 
    return (
@@ -97,8 +97,8 @@ function TimePicker({
                onFocus={handleFocus}
             />
          </div>
-         {isOpen && !disabled && Portal && (
-            <Portal>
+         {isOpen && !disabled  && (
+            // <Portal>
                <div className="react-ios-time-picker-popup">
                   <div
                      className={`react-ios-time-picker-popup-overlay ${popupClassName || ''}`}
@@ -106,7 +106,7 @@ function TimePicker({
                   />
                   <TimePickerSelection {...params} />
                </div>
-            </Portal>
+            // </Portal>
          )}
          </>
          )}
