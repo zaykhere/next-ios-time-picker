@@ -30,6 +30,7 @@ function TimePicker({
    const [isOpen, setIsOpen] = useState(initialIsOpenValue);
    const [height, setHeight] = useState(cellHeight);
    const [inputValue, setInputValue] = useState(initialValue);
+   const [renderPicker, setRenderPicker] = useState(false);
 
    const handleClick = () => {
       setIsOpen(!isOpen);
@@ -65,9 +66,18 @@ function TimePicker({
       pickerDefaultValue,
    };
 
+   useEffect(() => {
+     if(typeof document !== "undefined") {
+      setRenderPicker(true);
+     }
+   }, [])
+   
+
    return (
       <>
-         <div className="react-ios-time-picker-main" onClick={handleClick}>
+         {renderPicker && (
+            <>
+            <div className="react-ios-time-picker-main" onClick={handleClick}>
             <input
                id={id}
                name={name}
@@ -92,6 +102,9 @@ function TimePicker({
                </div>
             </Portal>
          )}
+         </>
+         )}
+         
       </>
    );
 }
