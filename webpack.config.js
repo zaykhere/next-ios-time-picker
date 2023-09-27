@@ -9,6 +9,7 @@ module.exports = {
       filename: 'TimePicker.js',
       libraryTarget: 'commonjs2',
    },
+   plugins: [new MiniCssExtractPlugin()],
    module: {
       rules: [
          {
