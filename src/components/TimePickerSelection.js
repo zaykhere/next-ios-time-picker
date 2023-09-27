@@ -28,6 +28,8 @@ function TimePickerSelection({
       hourFormat: initialValue.slice(6, 8),
    });
 
+   const [renderPicker, setRenderPicker] = useState(false);
+
    useEffect(() => {
       if (controllers === false) {
          const finalSelectedValue = use12Hours ? `${value} ${hourFormat.hourFormat}` : value;
@@ -41,6 +43,12 @@ function TimePickerSelection({
          onAmPmChange(hourFormat.hourFormat);
       }
    }, [hourFormat]);
+
+   useEffect(() => {
+      if(typeof window !== "undefined") {
+          setRenderPicker(true);
+       }
+    }, [])
 
    const params = {
       height,
@@ -66,37 +74,44 @@ function TimePickerSelection({
    };
 
    return (
-      <div className="react-ios-time-picker  react-ios-time-picker-transition">
-         {controllers && (
-            <div className="react-ios-time-picker-btn-container">
-               <button
-                  className="react-ios-time-picker-btn react-ios-time-picker-btn-cancel"
-                  onClick={handleCancel}
-               >
-                  {cancelButtonText}
-               </button>
-               <button className="react-ios-time-picker-btn" onClick={handleSave}>
-                  {saveButtonText}
-               </button>
-            </div>
-         )}
-         <div
-            className="react-ios-time-picker-container"
-            style={{ height: `${height * 5 + 40}px` }}
-         >
-            <div
-               className="react-ios-time-picker-selected-overlay"
-               style={{
-                  top: `${height * 2 + 20}px`,
-                  height: `${height}px`,
-               }}
-            />
-            <HourWheel {...params} />
-            {seperator && <div className="react-ios-time-picker-colon">:</div>}
-            <MinuteWheel {...params} />
-            {use12Hours && <HourFormat {...params} />}
-         </div>
-      </div>
+      <>
+      {renderPicker && (
+          <>
+          <div className="react-ios-time-picker  react-ios-time-picker-transition">
+             {controllers && (
+                <div className="react-ios-time-picker-btn-container">
+                   <button
+                      className="react-ios-time-picker-btn react-ios-time-picker-btn-cancel"
+                      onClick={handleCancel}
+                   >
+                      {cancelButtonText}
+                   </button>
+                   <button className="react-ios-time-picker-btn" onClick={handleSave}>
+                      {saveButtonText}
+                   </button>
+                </div>
+             )}
+             <div
+                className="react-ios-time-picker-container"
+                style={{ height: `${height * 5 + 40}px` }}
+             >
+                <div
+                   className="react-ios-time-picker-selected-overlay"
+                   style={{
+                      top: `${height * 2 + 20}px`,
+                      height: `${height}px`,
+                   }}
+                />
+                <HourWheel {...params} />
+                {seperator && <div className="react-ios-time-picker-colon">:</div>}
+                <MinuteWheel {...params} />
+                {use12Hours && <HourFormat {...params} />}
+             </div>
+          </div>
+          </>
+      )}
+     
+      </>
    );
 }
 

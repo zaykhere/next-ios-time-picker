@@ -1,6 +1,6 @@
 {
    "name": "next-ios-time-picker",
-   "version": "0.2.5",
+   "version": "0.2.6",
    "description": "A modern time picker for your Next app.",
    "main": "dist/TimePicker.js",
    "module": "dist/TimePicker.js",

@@ -68,11 +68,8 @@ function TimePicker({
 
    useEffect(() => {
      if(typeof window !== "undefined") {
-      if(typeof window.document !== "undefined") {
          setRenderPicker(true);
       }
-      
-     }
    }, [])
    
 

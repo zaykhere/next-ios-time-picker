@@ -26,6 +26,7 @@ function MinuteWheel({ height, value, setValue }) {
    const [dragDirection, setDragDirection] = useState(null);
    // selected number
    const [selectedNumber, setSelectedNumber] = useState(null);
+   const [renderPicker, setRenderPicker] = useState(false);
 
    const handleMouseDown = (e) => {
       setShowFinalTranslate(false);
@@ -178,47 +179,60 @@ function MinuteWheel({ height, value, setValue }) {
       }
    };
 
+   useEffect(() => {
+      if(typeof window !== "undefined") {
+          setRenderPicker(true);
+       }
+    }, [])
+
    return (
-      <div
-         className="react-ios-time-picker-minute"
-         onMouseDown={handleMouseDown}
-         onMouseUp={handleMouseUp}
-         onMouseMove={handleMouseMove}
-         onMouseLeave={handleMouseLeave}
-         style={{ height: height * 5 }}
-         onWheel={handleWheelScroll}
-         onTouchStart={handleTouchStart}
-         onTouchMove={handleTouchMove}
-         onTouchEnd={handleMouseUp}
-      >
-         {/* <PickerEffects height={height} /> */}
-         <div
-            ref={mainListRef}
-            className={`${isFastCondition === true && 'react-ios-time-picker-fast'} ${
-               isSlowCondition === true && 'react-ios-time-picker-slow'
-            }`}
-            onTransitionEnd={handleTransitionEnd}
-            style={{ transform: `translateY(${currentTranslatedValue}px)` }}
-         >
-            {hours.map((hourObj, index) => (
-               <div
-                  key={index}
-                  className="react-ios-time-picker-cell-minute"
-                  style={{ height: `${height}px` }}
-               >
-                  <div
-                     className={`react-ios-time-picker-cell-inner-minute${
-                        hourObj.selected ? ' react-ios-time-picker-cell-inner-selected' : ''
-                     }`}
-                     onClick={handleClickToSelect}
-                     data-translated-value={hourObj.translatedValue}
-                  >
-                     {hourObj.number}
-                  </div>
-               </div>
-            ))}
-         </div>
-      </div>
+      <>
+      {renderPicker && (
+          <>
+          <div
+             className="react-ios-time-picker-minute"
+             onMouseDown={handleMouseDown}
+             onMouseUp={handleMouseUp}
+             onMouseMove={handleMouseMove}
+             onMouseLeave={handleMouseLeave}
+             style={{ height: height * 5 }}
+             onWheel={handleWheelScroll}
+             onTouchStart={handleTouchStart}
+             onTouchMove={handleTouchMove}
+             onTouchEnd={handleMouseUp}
+          >
+             {/* <PickerEffects height={height} /> */}
+             <div
+                ref={mainListRef}
+                className={`${isFastCondition === true && 'react-ios-time-picker-fast'} ${
+                   isSlowCondition === true && 'react-ios-time-picker-slow'
+                }`}
+                onTransitionEnd={handleTransitionEnd}
+                style={{ transform: `translateY(${currentTranslatedValue}px)` }}
+             >
+                {hours.map((hourObj, index) => (
+                   <div
+                      key={index}
+                      className="react-ios-time-picker-cell-minute"
+                      style={{ height: `${height}px` }}
+                   >
+                      <div
+                         className={`react-ios-time-picker-cell-inner-minute${
+                            hourObj.selected ? ' react-ios-time-picker-cell-inner-selected' : ''
+                         }`}
+                         onClick={handleClickToSelect}
+                         data-translated-value={hourObj.translatedValue}
+                      >
+                         {hourObj.number}
+                      </div>
+                   </div>
+                ))}
+             </div>
+          </div>
+          </>
+      )}
+     
+      </>
    );
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { initialNumbersValue, returnSelectedValue } from '../helpers';
-import PickerEffects from './PickerEffects';
+// import PickerEffects from './PickerEffects';
 
 function HourFormat({ height, value, setValue, onAmPmChange, setHourFormat, hourFormat }) {
    const Hours = [
@@ -47,6 +47,8 @@ function HourFormat({ height, value, setValue, onAmPmChange, setHourFormat, hour
    const [dragDirection, setDragDirection] = useState(null);
    // selected number
    const [selectedNumber, setSelectedNumber] = useState(null);
+
+   const [renderPicker, setRenderPicker] = useState(false);
 
    const handleMouseDown = (e) => {
       setShowFinalTranslate(false);
@@ -189,47 +191,60 @@ function HourFormat({ height, value, setValue, onAmPmChange, setHourFormat, hour
       }
    };
 
+   useEffect(() => {
+      if(typeof window !== "undefined") {
+          setRenderPicker(true);
+       }
+    }, [])
+
    return (
-      <div
-         className="react-ios-time-picker-hour-format"
-         onMouseDown={handleMouseDown}
-         onMouseUp={handleMouseUp}
-         onMouseMove={handleMouseMove}
-         onMouseLeave={handleMouseLeave}
-         style={{ height: height * 5 }}
-         onWheel={handleWheelScroll}
-         onTouchStart={handleTouchStart}
-         onTouchMove={handleTouchMove}
-         onTouchEnd={handleMouseUp}
-      >
-         {/* <PickerEffects height={height} /> */}
-         <div
-            ref={mainListRef}
-            className={`${showFinalTranslate && 'react-ios-time-picker-hour-format-transition'}`}
-            onTransitionEnd={handleTransitionEnd}
-            style={{ transform: `translateY(${currentTranslatedValue}px)` }}
-         >
-            {hours.map((hourObj, index) => (
-               <div
-                  key={index}
-                  className="react-ios-time-picker-cell-hour"
-                  style={{ height: `${height}px` }}
-               >
-                  <div
-                     className={`react-ios-time-picker-cell-inner-hour-format${
-                        hourObj.selected
-                           ? ' react-ios-time-picker-cell-inner-hour-format-selected'
-                           : ''
-                     }`}
-                     onClick={handleClickToSelect}
-                     data-translated-value={hourObj.translatedValue}
-                  >
-                     {hourObj.number}
-                  </div>
-               </div>
-            ))}
-         </div>
-      </div>
+      <>
+         {renderPicker && (
+             <>
+             <div
+                className="react-ios-time-picker-hour-format"
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{ height: height * 5 }}
+                onWheel={handleWheelScroll}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleMouseUp}
+             >
+                {/* <PickerEffects height={height} /> */}
+                <div
+                   ref={mainListRef}
+                   className={`${showFinalTranslate && 'react-ios-time-picker-hour-format-transition'}`}
+                   onTransitionEnd={handleTransitionEnd}
+                   style={{ transform: `translateY(${currentTranslatedValue}px)` }}
+                >
+                   {hours.map((hourObj, index) => (
+                      <div
+                         key={index}
+                         className="react-ios-time-picker-cell-hour"
+                         style={{ height: `${height}px` }}
+                      >
+                         <div
+                            className={`react-ios-time-picker-cell-inner-hour-format${
+                               hourObj.selected
+                                  ? ' react-ios-time-picker-cell-inner-hour-format-selected'
+                                  : ''
+                            }`}
+                            onClick={handleClickToSelect}
+                            data-translated-value={hourObj.translatedValue}
+                         >
+                            {hourObj.number}
+                         </div>
+                      </div>
+                   ))}
+                </div>
+             </div>
+             </>
+         )}
+     
+      </>
    );
 }
 
