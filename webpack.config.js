@@ -8,7 +8,6 @@ module.exports = {
       filename: 'TimePicker.js',
       libraryTarget: 'commonjs2',
    },
-   plugins: ['@loadable/babel-plugin'],
    module: {
       rules: [
          {
