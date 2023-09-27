@@ -1,6 +1,6 @@
 {
    "name": "next-ios-time-picker",
-   "version": "0.2.6",
+   "version": "0.2.7",
    "description": "A modern time picker for your Next app.",
    "main": "dist/TimePicker.js",
    "module": "dist/TimePicker.js",
@@ -15,6 +15,7 @@
       "README.md"
    ],
    "dependencies": {
+      "@loadable/component": "^5.15.3",
       "react-portal": "^4.2.2"
    },
    "scripts": {

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Portal } from 'react-portal';
+// import { Portal } from 'react-portal';
 import TimePickerSelection from './TimePickerSelection';
 import '../styles/react-ios-time-picker.css';
+import loadable from '@loadable/component';
+let Portal;
 
 function TimePicker({
    value: initialValue = null,
@@ -69,6 +71,10 @@ function TimePicker({
    useEffect(() => {
      if(typeof window !== "undefined") {
          setRenderPicker(true);
+
+         if(typeof document !== "undefined") {
+            Portal = loadable(() => import("react-portal"))
+         }
       }
    }, [])
    
@@ -91,7 +97,7 @@ function TimePicker({
                onFocus={handleFocus}
             />
          </div>
-         {isOpen && !disabled && (
+         {isOpen && !disabled && Portal && (
             <Portal>
                <div className="react-ios-time-picker-popup">
                   <div
