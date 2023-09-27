@@ -1,5 +1,4 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
    mode: 'production',
@@ -9,7 +8,7 @@ module.exports = {
       filename: 'TimePicker.js',
       libraryTarget: 'commonjs2',
    },
-   plugins: [new MiniCssExtractPlugin()],
+   plugins: ['@loadable/babel-plugin'],
    module: {
       rules: [
          {
@@ -19,18 +18,8 @@ module.exports = {
          },
          {
             test: /\.css$/,
-            use: [
-              "style-loader",
-              {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                  esModule: false,
-                  publicPath: "",
-                },
-              },
-              "css-loader",
-            ],
-          }
+            use: ['style-loader', 'css-loader'],
+         },
       ],
    },
    resolve: {
